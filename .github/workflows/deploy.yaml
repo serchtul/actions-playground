@@ -1,0 +1,46 @@
+name: Deployment
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - master
+  push:
+    branches:
+      - develop
+      - master
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    if: github.event_name != deployment
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Build Docker Image
+        run: docker build .
+      
+      - name: Create Deployment
+        id: create-deploy
+        uses: actions/github-script@v2
+        with:
+          script: |
+            return await github.repos
+              .createDeployment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                ref: context.ref,
+                environment: 'test'
+                required_contexts: [],
+              });
+      
+      - name: Get Deployment Info
+        with:
+          DEPLOYMENT_ID: ${{ steps.create-deploy.outputs.result.id }}
+        run: |
+          echo "${{steps.create-deploy.outputs.result}}"
+          echo "Deployment: $DEPLOYMENT_ID"
+        
+        
+      
