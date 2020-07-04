@@ -25,14 +25,13 @@ jobs:
         uses: actions/github-script@v2
         with:
           script: |
-            return await github.repos
-              .createDeployment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                ref: context.ref,
-                environment: 'test'
-                required_contexts: [],
-              });
+            return github.repos.createDeployment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: context.ref,
+              environment: 'test'
+              required_contexts: [],
+            });
       
       - name: Get Deployment Info
         env:
