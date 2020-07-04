@@ -36,7 +36,7 @@ jobs:
               });
       
       - name: Get Deployment Info
-        with:
+        env:
           DEPLOYMENT_ID: ${{ steps.create-deploy.outputs.result.id }}
         run: |
           echo "${{steps.create-deploy.outputs.result}}"
