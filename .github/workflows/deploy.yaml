@@ -31,6 +31,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 ref: context.ref,
+                auto_merge: false,
                 environment: 'test',
                 required_contexts: [],
               });
