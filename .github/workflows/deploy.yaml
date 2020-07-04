@@ -25,11 +25,10 @@ jobs:
         uses: actions/github-script@v2
         with:
           script: |
-            return github.repos.createDeployment({
+            github.repos.createDeployment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: context.ref,
-              environment: 'test'
               required_contexts: [],
             });
       
