@@ -38,8 +38,10 @@ jobs:
             return id;
       
       - name: Get Deployment Info
+        env:
+          DEPLOYMENT_ID: ${{ steps.create-deploy.outputs.result }}
         run: |
-          echo "${{steps.create-deploy.outputs.result}}"
+          echo "$DEPLOYMENT_ID"
         
         
       
