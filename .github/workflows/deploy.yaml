@@ -25,7 +25,7 @@ jobs:
         uses: actions/github-script@v2
         with:
           script: |
-            const { data } = await github
+            const { data: {id} } = await github
               .repos
               .createDeployment({
                 owner: context.repo.owner,
@@ -34,15 +34,11 @@ jobs:
                 environment: 'test',
                 required_contexts: [],
               });
-            console.log(data);
-            return data;
+            return id;
       
       - name: Get Deployment Info
-        env:
-          DEPLOYMENT_ID: ${{ steps.create-deploy.outputs.result.id }}
         run: |
           echo "${{steps.create-deploy.outputs.result}}"
-          echo "Deployment: $DEPLOYMENT_ID"
         
         
       
